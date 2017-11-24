@@ -1,0 +1,1 @@
+all the albums live here, as posts.  MYabe tehre's a way to just loop through all the subflders and automatically generate albums?  I don't know.  Take the names of the folders as album names, some readme file becomes the flavor text for the album
