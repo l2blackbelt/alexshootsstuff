@@ -37,15 +37,18 @@ h = W / (x1 +x2 + x3)
 	<a href="#">contact</a>
 	<style>
 		img {
-    		/*max-width: 100%;
-    		max-height: 100%;*/
-    		padding-left: 0px;
-    		padding-right: 0px;
-    		padding-bottom: 0px; 
-    		border:5px;
+    		/*max-width: 100px;
+    		max-height: 100px;
+    		display: block;
+    		-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box; 
+			box-sizing: border-box;     
+    		padding: 5px*/
 		}
 		section{
-			/*padding-right: 20px*/ 
+			font-size: 0; /*necessary to prevent unwanted gaps in the photos*/
+			padding-left: 40;
+			padding-right: 40;
 		}
 	</style>
 </head>
@@ -61,68 +64,97 @@ h = W / (x1 +x2 + x3)
 	<img src="img/fed/DSC00245.jpg">
 </section>
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
-	/*$(window).resize(function(){
-		sort_pics()
-	});*/
+	$(window).resize(function(){
+		//sort_pics()
+	});
+
+	var pic_array = []
 
 	$(window).on("load", function(){
+		create_pic_array()
 		sort_pics()
 	});
 
+	function create_pic_array(){
+		$('#photos img').each(function () {
+			var pic = new picture($(this),$(this).width(),$(this).height())
+			pic_array.push(pic)
+		});
+
+		function picture(src, width, height) {
+			this.src = src;
+		  	this.width = width;
+		  	this.height = height;
+		  	this.ratio = width/height;
+		}
+		console.log(pic_array.length)
+
+	}
 
 
 	function sort_pics(){
 
+
+		function line(window_width) { //line object represents a line of images on the screen
+			this.maxheight = 600
+			this.padding = 0
+
+			this.width = window_width
+			this.imgs = []
+		  	this.ratiosum = 0
+		  	this.height = 999999
+		  	this.add_img = function(img){
+		  		this.imgs.push(img)
+		  		this.ratiosum += img.ratio
+		  		this.height = this.width/this.ratiosum
+		  		this.maxheight = Math.min(img.height,this.maxheight)
+		  	}
+		  	this.am_i_properly_sized = function(){
+		  		return (this.height < this.maxheight)
+		  	}
+		  	this.fit_line_to_window = function(){
+		  		var scaled_image_width = 0 //find out what the image was actually scaled to.  To get pixel perfect edges we will need to fudge the width of a picture per line
+		  		for(j = 0; j < this.imgs.length; j++){
+					this.imgs[j].src.height(this.height)
+					this.imgs[j].src.width(this.height*this.imgs[j].ratio) //there's still more work I can do refactoring this code. why need to store copies of all the picture structure in the new array?
+					scaled_image_width += this.imgs[j].src.width()
+					//console.log("image with width="+this.imgs[j].src.width())
+				}
+				this.imgs[0].src.width(this.imgs[0].src.width()-(scaled_image_width-this.width)) //fudging the scaling of one image per line to get pixel perfect right edge.
+		  	}
+		  	this.scale_line_height_to_value = function(val){
+		  		for(j = 0; j < this.imgs.length; j++){
+					this.imgs[j].src.height(val)
+				}
+		  	}
+		}
+
+		//master variables
 		var max_line_height = 600
+		var img_padding = 5
+		var window_width = $("#photos").width() //note: 16 appears to be the default margin size  Just on Chrome?
 
+		//console.log("window.  width="+window_width)
 
+		var cur_line = new line(window_width)
+		for(i = 0; i < pic_array.length; i++){
+			console.log("i= "+i)
 
-		var window_width = $(window).width()-25 //note: 16 appears to be the base amount of padding.  Just on Chrome?
+			cur_line.add_img(pic_array[i])
+			console.log("added img")
 
-		var img_list = []
-		var aspect_ratio_sum = 0
-		var line_height = max_line_height
-		var fudge_image_padding = 0 //on lines that have two or more pictures, there is a 1 px border around, so 2 px between them
+			if(cur_line.am_i_properly_sized()){ //calculated height of window less than maximum
 
-
-		console.log("window.  width="+window_width)
-
-		$('#photos img').each(function () {
-			
-			var img_width = $(this).width()
-			var img_height = $(this).height()
-			console.log("image.  width="+img_width+" height="+img_height)
-
-			if(img_height < line_height){line_height = img_height} //div shouldn't be taller than the maximum of the picture's height or the height I set
-			aspect_ratio_sum += (img_width/img_height) //save aspect ratio sum for scaling the div once we find out it's getting wider than the window.
-			img_list.push($(this))
-
-			var cur_line_height = (window_width-fudge_image_padding*2.0*img_list.length)/aspect_ratio_sum
-
-			//cur_line_height = window_width/img_width*img_height
-			
-
-			if(cur_line_height < line_height){ //calculated height of window less than maximum
-				console.log("new line with height="+cur_line_height)
-				if (img_list.length ==1 ) {
-					//edge case handling
-					img_list[0].css("padding-bottom","4")
-					cur_line_height+=fudge_image_padding
-				}
-				for(i = 0; i < img_list.length; i++){
-					img_list[i].height(parseInt(cur_line_height))
-					//img_list[i].width(img_list[i].width()/line_height*cur_line_height)
-				}
-				img_list = []
-				aspect_ratio_sum = 0
-				line_height = max_line_height
-
+				cur_line.fit_line_to_window()
+				var cur_line = new line(window_width)
+				console.log("scaled")
 			}
 			
-	    });
+	    }
+	    cur_line.scale_line_height_to_value(cur_line.maxheight*.8) //fit any straggling lines that aren't fit to the window
+
 	}
 </script>
