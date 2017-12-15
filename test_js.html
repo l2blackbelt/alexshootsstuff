@@ -1,0 +1,144 @@
+<!--
+	outer loop
+	Take next picture out of queue.
+	Set div height to maximum we ever want.
+
+	Loop
+	Is the div wider than the screen width?
+
+		yes 
+			apply a scaling factor to the div to exactly fit the window.  start outer loop
+		no
+			add another picture to the line.  Start inner loop
+
+
+
+h = x*w
+
+w = W
+
+x = w/h
+h = w/x
+w = hx
+
+x = divwidth/200
+
+w1 + w2 +w3 = W
+
+h1 = h2 = h3
+
+H  such that w1 +w2 + w3 = W
+
+hx1 + hx2 + hx3 = W
+
+h = W / (x1 +x2 + x3)
+
+w1/h1=x1.
+-->
+
+
+
+
+
+
+<head>
+	<h1>alex|smith</h1>
+	<a href="#">portfolio</a>
+	<a href="#">about</a>
+	<a href="#">contact</a>
+	<style>
+		img {
+    		max-width: 100%;
+    		max-height: 100%;
+    		/*padding:5px;*/
+		}
+		div {
+  			/*padding:10px;
+ 			/*background:#bada55;
+ 			border:1px solid;
+ 			margin:10px*/
+		}
+	</style>
+</head>
+
+<section id = "photos">
+	<!--div id="cur" style="height: 500px"></div-->
+	<img src="img/fed/header.jpg">
+	<img src="img/fed/DSC00003.jpg">
+	<img src="img/fed/DSC00019.jpg">
+	<img src="img/fed/DSC00073.jpg">
+	<img src="img/fed/DSC00195.jpg">
+	<img src="img/fed/DSC00243.jpg">
+	<img src="img/fed/DSC00245.jpg">
+</section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+	/*$(window).resize(function(){
+		$('#photos div').each(function () {$(this).attr("id","removeme")});
+		sort_pics()
+		$('#photos #removeme').each(function () {$(this).remove()});
+
+	});*/
+
+	$(window).on("load", function(){
+		sort_pics()
+	});
+
+
+
+	function sort_pics(){
+		//master variables
+		var max_div_height = 600
+		var image_padding_inner = 0 //multiplied by 2 (ALSO NOT DONE YET)
+		var image_padding_left = 20
+		var image_padding_right = 20
+
+
+		//loop variables
+		var aspect_ratio_sum = 1
+		var divwidth = 9999999999
+		var div = '<div id="cur" style="height:'+max_div_height+'; padding-bottom:'+image_padding_inner*2+'; padding-left:'+image_padding_left+'; padding-right:'+image_padding_right+'" </div><br/>'
+
+
+		window_width = $(document).width()-image_padding_left-image_padding_right-16 //note: 16 appears to be the base amount of padding.  Just on Chrome?
+		$('#photos img').each(function () {
+
+			//start on new line if current line full, or first loop
+			if(divwidth>window_width){
+				newline()
+			}
+			else{
+				divwidth += image_padding_inner*2 //compensate for spacing between images
+			}
+
+			//add image to current line
+
+			var width = $(this).width()
+			var height = $(this).height()  //WHY DOES THIS CHANGE?!??!?!?!?!!?
+
+			if(height < max_div_height){max_div_height = height} //div shouldn't be taller than the maximum of the picture's height or the height I set
+
+			aspect_ratio_sum += (width/height) //save aspect ratio sum for scaling the div once we find out it's getting wider than the window.
+
+			$("#cur").append($(this))
+			divwidth += $(this).width() //div shouldn't be wider than the window. save tally of image widths to check later (order matters, I want width inside div)
+
+
+			
+	    });
+
+	    newline() //get final line to fit to a div, too.
+
+	    function newline(){
+		    //start on new line if current line full, or first loop
+			$("#cur").height(window_width/aspect_ratio_sum) 
+			$("#cur").attr("id","old")
+			$("#photos").append(div)
+			divwidth = 0
+			aspect_ratio_sum = 0
+		}
+	}
+</script>
