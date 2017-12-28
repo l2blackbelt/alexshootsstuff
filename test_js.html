@@ -26,49 +26,100 @@ h = W / (x1 +x2 + x3)
 -->
 
 
-
-
-
-
 <head>
-	<h1>alex|smith</h1>
-	<a href="#">portfolio</a>
-	<a href="#">about</a>
-	<a href="#">contact</a>
+
 	<style>
-		img {
-    		/*max-width: 100px;
-    		max-height: 100px;
-    		display: block;
-    		-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box; 
-			box-sizing: border-box;     
-    		padding: 5px*/
-		}
-		section{
-			font-size: 0; /*necessary to prevent unwanted gaps in the photos*/
-			padding-left: 40;
-			padding-right: 40;
-		}
-	</style>
+	/*navbar styling*/
+	#navbar ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 16px;
+		font-family: "Times New Roman", Times, serif;
+	}
+
+	#navbar li { /* this applies to all list elements.. for some reason it won't apply to the a hyperlink classes.  It makes all elements align to bottom, good since different sizes*/
+	display:inline;  vertical-align:bottom; 
+}
+
+#navbar .active {
+	color: #000000;
+}
+
+#navbar .header {
+	color: #000000;
+	font-size: 200%;
+	font-family: Arial, sans-serif;
+}
+
+#navbar li a {
+	color: #B3B3B3;
+	padding-right: 20; /*space between list elements?*/
+	text-decoration: none; 
+}
+
+/* Change the link color to #111 (black) on hover */
+#navbar li a:hover {
+	color: #000000;
+}
+
+
+
+/*photo galley styling*/
+img{
+	padding: 5; /*warning, padding values will distort the pictures, it cheats on width.  don't make it too big*/
+}
+
+
+
+/*spacing between elements*/
+#navbar{
+	padding-bottom: 40;
+}
+body {
+	font-size: 0; /*necessary to prevent unwanted gaps in the photos*/
+	padding-left: 40;
+	padding-right: 40;
+	padding-top: 40;
+	padding-bottom: 40;
+}
+
+</style>
 </head>
 
-<section id = "photos">
-	<!--div id="cur" style="height: 500px"></div-->
-	<img src="img/fed/header.jpg">
-	<img src="img/fed/DSC00003.jpg">
-	<img src="img/fed/DSC00019.jpg">
-	<img src="img/fed/DSC00073.jpg">
-	<img src="img/fed/DSC00195.jpg">
-	<img src="img/fed/DSC00243.jpg">
-	<img src="img/fed/DSC00245.jpg">
-</section>
+<body>
+
+	<!-- I wanna nice manu bar!-->
+
+	<section id = "navbar">
+		<ul>
+			<li><a class="header" href="#">alex|smith</a></li>
+			<li><a class="active" href="#">portfolio</a></li>
+			<li><a href="#">about</a></li>
+			<li><a href="#">contact</a></li>
+		</ul>
+	</section>
+
+	<section id = "photos">
+		<!--div id="cur" style="height: 500px"></div-->
+		<img src="img/fed/header.jpg">
+		<img src="img/fed/DSC00003.jpg">
+		<img src="img/fed/DSC00019.jpg">
+		<img src="img/fed/DSC00073.jpg">
+		<img src="img/fed/DSC00195.jpg">
+		<img src="img/fed/DSC00243.jpg">
+		<img src="img/fed/DSC00245.jpg">
+	</section>
+
+</body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
 	$(window).resize(function(){
-		//sort_pics()
+		sort_pics()
 	});
 
 	var pic_array = []
@@ -86,9 +137,9 @@ h = W / (x1 +x2 + x3)
 
 		function picture(src, width, height) {
 			this.src = src;
-		  	this.width = width;
-		  	this.height = height;
-		  	this.ratio = width/height;
+			this.width = width;
+			this.height = height;
+			this.ratio = width/height;
 		}
 		console.log(pic_array.length)
 
@@ -100,41 +151,41 @@ h = W / (x1 +x2 + x3)
 
 		function line(window_width) { //line object represents a line of images on the screen
 			this.maxheight = 600
-			this.padding = 0
+			this.padding = parseInt($('img').css('padding-right'))*2 //fore some reason needs to be double the css padding value
+			console.log(this.padding)
 
 			this.width = window_width
 			this.imgs = []
-		  	this.ratiosum = 0
-		  	this.height = 999999
-		  	this.add_img = function(img){
-		  		this.imgs.push(img)
-		  		this.ratiosum += img.ratio
-		  		this.height = this.width/this.ratiosum
-		  		this.maxheight = Math.min(img.height,this.maxheight)
-		  	}
-		  	this.am_i_properly_sized = function(){
-		  		return (this.height < this.maxheight)
-		  	}
-		  	this.fit_line_to_window = function(){
+			this.ratiosum = 0
+			this.height = 999999
+			this.add_img = function(img){
+				this.imgs.push(img)
+				this.ratiosum += img.ratio
+				this.height = this.width / this.ratiosum
+				this.maxheight = Math.min(img.height,this.maxheight)
+			}
+			this.am_i_properly_sized = function(){
+				return (this.height < this.maxheight)
+			}
+			this.fit_line_to_window = function(){
 		  		var scaled_image_width = 0 //find out what the image was actually scaled to.  To get pixel perfect edges we will need to fudge the width of a picture per line
 		  		for(j = 0; j < this.imgs.length; j++){
-					this.imgs[j].src.height(this.height)
-					this.imgs[j].src.width(this.height*this.imgs[j].ratio) //there's still more work I can do refactoring this code. why need to store copies of all the picture structure in the new array?
+		  			this.imgs[j].src.height(this.height)
+					this.imgs[j].src.width(this.height*this.imgs[j].ratio - this.padding) //there's still more work I can do refactoring this code. why need to store copies of all the picture structure in the new array?
 					scaled_image_width += this.imgs[j].src.width()
 					//console.log("image with width="+this.imgs[j].src.width())
 				}
-				this.imgs[0].src.width(this.imgs[0].src.width()-(scaled_image_width-this.width)) //fudging the scaling of one image per line to get pixel perfect right edge.
-		  	}
-		  	this.scale_line_height_to_value = function(val){
-		  		for(j = 0; j < this.imgs.length; j++){
+				//this.imgs[0].src.width(this.imgs[0].src.width()-(scaled_image_width-this.width)) //fudging the scaling of one image per line to get pixel perfect right edge.
+			}
+			this.scale_line_height_to_value = function(val){
+				for(j = 0; j < this.imgs.length; j++){
 					this.imgs[j].src.height(val)
 				}
-		  	}
+			}
 		}
 
+
 		//master variables
-		var max_line_height = 600
-		var img_padding = 5
 		var window_width = $("#photos").width() //note: 16 appears to be the default margin size  Just on Chrome?
 
 		//console.log("window.  width="+window_width)
@@ -153,7 +204,7 @@ h = W / (x1 +x2 + x3)
 				console.log("scaled")
 			}
 			
-	    }
+		}
 	    cur_line.scale_line_height_to_value(cur_line.maxheight*.8) //fit any straggling lines that aren't fit to the window
 
 	}
