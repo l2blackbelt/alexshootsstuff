@@ -86,6 +86,45 @@ body {
 	padding-bottom: 40;
 }
 
+
+
+/*all the testing transparency stuff.  This should be consolidated and made clean */
+.container {
+	position: relative;
+	display: inline-block;
+}
+
+.text {
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+  	/*background: rgb(0, 0, 0);
+  	background: rgba(0, 0, 0, 0.7);*/
+  }
+
+  .overlay {
+  	position: absolute;
+  	top: 0;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+  	height: 100%;
+  	width: 100%;
+  	opacity: 0;
+  	transition: .5s ease;
+  	background-color: #000000;
+  }
+
+
+  .container:hover .overlay {
+  	opacity: 0.5;
+  } /*TODO maybe: I'm going to need to figure out a way to get the overlay 50% opaque and the text 100%.  
+  Should be able to ease text in from bottom. It shold go in it's own span that can have a darker background*/
+
 </style>
 </head>
 
@@ -97,20 +136,57 @@ body {
 		<ul>
 			<li><a class="header" href="#">alex|smith</a></li>
 			<li><a class="active" href="#">portfolio</a></li>
+			<li><a href="#">albums</a></li>
 			<li><a href="#">about</a></li>
 			<li><a href="#">contact</a></li>
 		</ul>
 	</section>
 
 	<section id = "photos">
-		<!--div id="cur" style="height: 500px"></div-->
-		<img src="img/fed/header.jpg">
-		<img src="img/fed/DSC00003.jpg">
-		<img src="img/fed/DSC00019.jpg">
-		<img src="img/fed/DSC00073.jpg">
-		<img src="img/fed/DSC00195.jpg">
-		<img src="img/fed/DSC00243.jpg">
-		<img src="img/fed/DSC00245.jpg">
+
+		<!-- this html can be generated in jekyll -->
+		<div class="container">
+			<img src="img/fed/header.jpg">
+			<div class="overlay">
+				<div class="text">111</br>2222</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00003.jpg">
+			<div class="overlay">
+				<div class="text">111</br>2222</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00019.jpg">
+			<div class="overlay">
+				<div class="text">333</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00073.jpg">
+			<div class="overlay">
+				<div class="text">444</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00195.jpg">
+			<div class="overlay">
+				<div class="text">555</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00243.jpg">
+			<div class="overlay">
+				<div class="text">666</div>
+			</div>
+		</div>
+		<div class="container">
+			<img src="img/fed/DSC00245.jpg">
+			<div class="overlay">
+				<div class="text">666</div>
+			</div>
+		</div>
 	</section>
 
 </body>
@@ -141,7 +217,24 @@ body {
 			this.height = height;
 			this.ratio = width/height;
 		}
-		console.log(pic_array.length)
+		//console.log(pic_array.length)
+
+	}
+
+	function add_mouseover_effect(){
+		for(i = 0; i < pic_array.length; i++){
+
+			//pseudocode here, should iterate and add the on-mouseover overlay effect to each image...
+			//will need to wrap each in a div.
+			//each div will contain
+			//	image
+			//	overlay layer
+			//	text layer for caption
+			//(This could just be done in html)
+
+			//LOL THIS ALL WORKED EASILY IN CSS
+
+		}
 
 	}
 
@@ -152,7 +245,7 @@ body {
 		function line(window_width) { //line object represents a line of images on the screen
 			this.maxheight = 600
 			this.padding = parseInt($('img').css('padding-right'))*2 //fore some reason needs to be double the css padding value
-			console.log(this.padding)
+			//console.log(this.padding)
 
 			this.width = window_width
 			this.imgs = []
@@ -163,6 +256,7 @@ body {
 				this.ratiosum += img.ratio
 				this.height = this.width / this.ratiosum
 				this.maxheight = Math.min(img.height,this.maxheight)
+
 			}
 			this.am_i_properly_sized = function(){
 				return (this.height < this.maxheight)
@@ -190,18 +284,13 @@ body {
 
 		//console.log("window.  width="+window_width)
 
-		var cur_line = new line(window_width)
+		var cur_line = new line(window_width) //create first line
 		for(i = 0; i < pic_array.length; i++){
-			console.log("i= "+i)
-
 			cur_line.add_img(pic_array[i])
-			console.log("added img")
 
 			if(cur_line.am_i_properly_sized()){ //calculated height of window less than maximum
-
 				cur_line.fit_line_to_window()
-				var cur_line = new line(window_width)
-				console.log("scaled")
+				var cur_line = new line(window_width) //start next line
 			}
 			
 		}
