@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/photoTiler.js"></script>
+<link rel="stylesheet" href="/css/gallery.css"/>
+
+<h2 class="content">{{page.title}}</h2>
+
+{{ content }}
+
+<section id = "photos">
+	{% for image in site.static_files %}
+	{% if image.path contains page.folder%}
+
+	<a href="{{ site.baseurl }}{{ image.path }}">
+		<div class="container">
+			<img class="shrink" src="{{ site.baseurl }}{{ image.path }}" alt="image" />
+		</div>
+	</a>
+	{%endif%}
+	{% endfor %}
+</section> 

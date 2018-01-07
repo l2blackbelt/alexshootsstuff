@@ -16,20 +16,14 @@ layout: default
 <section id = "photos">
 
   {% for post in site.posts %}
-  {% for image in site.static_files %}
-  {% if image.path contains post.folder %}
-  {% if image.path contains "highlight" %}
-  <a href="{{ site.baseurl }}{{ image.path }}">
+  <a href="{{ post.url }}">
     <div class="container">
-      <img class="shrink" src="{{ site.baseurl }}{{ image.path }}" alt="image" />
+      <img src="../{{post.folder}}{{post.image}}"/>
       <div class="overlay">
-        <div class="text">from {{post.title}}</div>
+        <div class="text"><strong>{{post.title}}</strong>{{ post.content }}</div>
       </div>
     </div>
   </a>
-  {%endif%}
-  {%endif%}
-  {% endfor %}
   {% endfor %}
 </section>
 
