@@ -14,17 +14,16 @@ layout: default
   <p>Check out my images below!</p>
 </section-->
 <section id = "photos">
-
-  {% for post in site.posts %}
-  <a href="{{ post.url }}">
-    <div class="container">
-      <img src="../{{post.folder}}{{post.image}}"/>
-      <div class="overlay">
-        <div class="text"><strong>{{post.title}}</strong>{{ post.content }}</div>
-      </div>
-    </div>
-  </a>
-  {% endfor %}
+    {% for post in site.posts %}
+    <a href="{{ post.url }}">
+        <div class="container">
+            <img src="../{{post.folder}}{{post.image}}"/>
+            <div class="overlay">
+                <div class="text"><strong>{{post.title}}</strong>{{ post.content }}</div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
 </section>
 
 

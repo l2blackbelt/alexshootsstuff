@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="/css/default.css"/>
-  <meta charset=utf-8 />
-  <title> {% if page.title %} {{ page.title }} | {% endif %} alex|smith </title>
+    <link rel="stylesheet" href="/css/default.css"/>
+    <meta charset=utf-8 />
+    <title> {% if page.title %} {{ page.title }} | {% endif %} alex|smith </title>
 </head>
 <body>
-  <section id = "navbar">
-    <ul>
-      <li><a class="header" href="/">alex|smith</a></li>
-      <li><a {% if page.url == "/" %} class="active"{%endif%} href="/">portfolio</a></li>
-      <li><a {% if page.url == "/albums.html" %} class="active"{%endif%} href="/albums.html">albums</a></li>
-      <li><a {% if page.url == "/contact.html" %} class="active"{%endif%} href="/contact.html">contact</a></li>
-    </ul>
-  </section>
+    <section id = "navbar">
+        <ul>
+            <li><a class="header" href="/">alex|smith</a></li>
+            <li><a {% if page.url == "/" %} class="active"{%endif%} href="/">portfolio</a></li>
+            <li><a {% if page.url == "/albums.html" %} class="active"{%endif%} href="/albums.html">albums</a></li>
+            <li><a {% if page.url == "/contact.html" %} class="active"{%endif%} href="/contact.html">contact</a></li>
+        </ul>
+    </section>
 {{content}}
 <footer>
-  <a href=/contact.html>© 2018 Alexander Smith</a>
+    <a href=/contact.html>© 2018 Alexander Smith</a>
 </footer>
 </body>
 </html>

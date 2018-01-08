@@ -1,46 +1,46 @@
 /*css required for gallery to work*/
 img{
-  padding: 5px; /*warning, padding values will distort the pictures, it cheats on width.  don't make it too big*/
+    padding: 5px; /*warning, padding values will distort the pictures, it cheats on width.  don't make it too big*/
 }
 
 body {
-  font-size: 0px; /*necessary to prevent unwanted gaps in the photos */
+    font-size: 0px; /*necessary to prevent unwanted gaps in the photos */
 }
 
 
 
 /*all the testing transparency stuff.  This should be consolidated and made clean */
 .container {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .text {
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: #000000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #000000;
 }
 
 
 .container:hover .overlay {
-  opacity: 0.5;
+    opacity: 0.5;
 } 
 
 
@@ -51,10 +51,10 @@ body {
  transition: transform 0.2s; 
 }
 .container:hover .shrink {
-  transform: scale(0.97);
+    transform: scale(0.97);
 } 
 .container:active .shrink {
-  transform: scale(0.99);
+    transform: scale(0.99);
 } 
 
 /*TODO maybe: I'm going to need to figure out a way to get the overlay 50% opaque and the text 100%.  

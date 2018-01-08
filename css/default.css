@@ -2,18 +2,18 @@
 
 
 @font-face{
-  font-family: "AvenirLTStd-Light";
-  src: url('/font/AvenirLTStd-Light.otf');
+    font-family: "AvenirLTStd-Light";
+    src: url('/font/AvenirLTStd-Light.otf');
 }
 
 #navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  font-size: 18px;
-  
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 18px;
+    
 }
 
 #navbar li { /* this applies to all list elements.. for some reason it won't apply to the a hyperlink classes.  It makes all elements align to bottom, good since different sizes*/
@@ -21,52 +21,52 @@ display:inline;  vertical-align:bottom;
 }
 
 #navbar .active {
-  color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 #navbar .header {
-  color: #FFFFFF;
-  font-size: 250%;
+    color: #FFFFFF;
+    font-size: 250%;
 }
 
 #navbar li a {
-  color: #D3D3D3;
-  padding-right: 30px; /*space between list elements?*/
-  text-decoration: none; 
+    color: #D3D3D3;
+    padding-right: 30px; /*space between list elements?*/
+    text-decoration: none; 
 }
 
 /* Change the link color to #111 (black) on hover */
 #navbar li a:hover {
-  color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 
 /*spacing between page elements*/
 #navbar{
-  padding-bottom: 40px;
-  color: #FFFFFF;
+    padding-bottom: 40px;
+    color: #FFFFFF;
 }
 
 body {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #000000;
-  font-family: "AvenirLTStd-Light";
-  font-size: 20px;
-  color: #B3B3B3;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #000000;
+    font-family: "AvenirLTStd-Light";
+    font-size: 20px;
+    color: #B3B3B3;
 }
 
 body a{
-  color: #D3D3D3;
-  text-decoration: none;
+    color: #D3D3D3;
+    text-decoration: none;
 }
 body a:hover{
-  color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 footer{
-  padding-top: 80px;
-  font-size: 14px;
+    padding-top: 80px;
+    font-size: 14px;
 }
