@@ -21,302 +21,47 @@ Copyright (C) 2017  Alexander Smith
 
 -->
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/photoTiler.js"></script>
+<link rel="stylesheet" href="/css/default.css"/>
+<link rel="stylesheet" href="css/gallery.css"/>
 
-<!--
-    outer loop
-    Take next picture out of queue.
-    Set div height to maximum we ever want.
-
-    Loop
-    Is the div wider than the screen width?
-
-        yes 
-            apply a scaling factor to the div to exactly fit the window.  start outer loop
-        no
-            add another picture to the line.  Start inner loop
-
-
-
-
-w1 + w2 + w3 = W
-
-x = w/h
-w = xh
-
-hx1 + hx2 + hx3 = W
-
-h = W / (x1 +x2 + x3)
-
--->
-
-
-<head>
-<style>
-#navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 16px;
-    font-family: "Times New Roman", Times, serif;
-}
-
-    #navbar li { /* this applies to all list elements.. for some reason it won't apply to the a hyperlink classes.  It makes all elements align to bottom, good since different sizes*/
-    display:inline;  vertical-align:bottom; 
-}
-
-#navbar .active {
-    color: #000000;
-}
-
-#navbar .header {
-    color: #000000;
-    font-size: 200%;
-    font-family: Arial, sans-serif;
-}
-
-#navbar li a {
-    color: #B3B3B3;
-    padding-right: 20; /*space between list elements?*/
-    text-decoration: none; 
-}
-
-/* Change the link color to #111 (black) on hover */
-#navbar li a:hover {
-    color: #000000;
-}
-
-
-
-/*photo galley styling*/
-img{
-    padding: 5; /*warning, padding values will distort the pictures, it cheats on width.  don't make it too big*/
-}
-
-
-
-/*spacing between elements*/
-#navbar{
-    padding-bottom: 40;
-}
-body {
-    font-size: 0; /*necessary to prevent unwanted gaps in the photos*/
-    padding-left: 40;
-    padding-right: 40;
-    padding-top: 40;
-    padding-bottom: 40;
-}
-
-
-
-/*all the testing transparency stuff.  This should be consolidated and made clean */
-.container {
-    position: relative;
-    display: inline-block;
-}
-
-.text {
-    color: white;
-    font-size: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    /*background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.7);*/
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: #000000;
-}
-
-
-.container:hover .overlay {
-    opacity: 0.5;
-  } /*TODO maybe: I'm going to need to figure out a way to get the overlay 50% opaque and the text 100%.  
-  Should be able to ease text in from bottom. It shold go in it's own span that can have a darker background*/
-
-</style>
-</head>
 
 <body>
 
-    <!-- I wanna nice manu bar!-->
-
-    <section id = "navbar">
-        <ul>
-            <li><a class="header" href="#">alex|smith</a></li>
-            <li><a class="active" href="#">portfolio</a></li>
-            <li><a href="#">albums</a></li>
-            <li><a href="#">about</a></li>
-            <li><a href="#">contact</a></li>
-        </ul>
-    </section>
-
+    <!-- this format is required EXACTLY for the JS to pick up the gallery-->
     <section id = "photos">
 
-        <!-- this html can be generated in jekyll -->
-        <div class="container">
-            <img src="img/fed/header.jpg">
-            <div class="overlay">
-                <div class="text">111</br>2222</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00003.jpg">
-            <div class="overlay">
-                <div class="text">111</br>2222</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00019.jpg">
-            <div class="overlay">
-                <div class="text">333</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00073.jpg">
-            <div class="overlay">
-                <div class="text">444</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00195.jpg">
-            <div class="overlay">
-                <div class="text">555</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00243.jpg">
-            <div class="overlay">
-                <div class="text">666</div>
-            </div>
-        </div>
-        <div class="container">
-            <img src="img/fed/DSC00245.jpg">
-            <div class="overlay">
-                <div class="text">666</div>
-            </div>
-        </div>
+    	<a href="img/fed/DSC00003.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00003.jpg" alt="HI!" />
+			</div>
+		</a>
+		<a href="img/fed/DSC00019.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00019.jpg" alt="My" />
+			</div>
+		</a>
+		<a href="img/fed/DSC00073.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00073.jpg" alt="Name" />
+			</div>
+		</a>
+		<a href="img/fed/DSC00195.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00195.jpg" alt="is" />
+			</div>
+		</a>
+		<a href="img/fed/DSC00243.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00243.jpg" alt="George" />
+			</div>
+		</a>
+		<a href="img/fed/DSC00245.jpg">
+			<div class="container">
+				<img class="shrink" src="img/fed/DSC00245.jpg" alt="..." />
+			</div>
+		</a>
     </section>
 
 </body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-
-    $(window).resize(function(){
-        sort_pics()
-    });
-
-    var pic_array = []
-
-    $(window).on("load", function(){
-        create_pic_array()
-        sort_pics()
-    });
-
-    function create_pic_array(){
-        $('#photos img').each(function () {
-            var pic = new picture($(this),$(this).width(),$(this).height())
-            pic_array.push(pic)
-        });
-
-        function picture(src, width, height) {
-            this.src = src;
-            this.width = width;
-            this.height = height;
-            this.ratio = width/height;
-        }
-        //console.log(pic_array.length)
-
-    }
-
-    function add_mouseover_effect(){
-        for(i = 0; i < pic_array.length; i++){
-
-            //pseudocode here, should iterate and add the on-mouseover overlay effect to each image...
-            //will need to wrap each in a div.
-            //each div will contain
-            //  image
-            //  overlay layer
-            //  text layer for caption
-            //(This could just be done in html)
-
-            //LOL THIS ALL WORKED EASILY IN CSS
-
-        }
-
-    }
-
-
-    function sort_pics(){
-
-
-        function line(window_width) { //line object represents a line of images on the screen
-            this.maxheight = 600
-            this.padding = parseInt($('img').css('padding-right'))*2 //fore some reason needs to be double the css padding value
-            //console.log(this.padding)
-
-            this.width = window_width
-            this.imgs = []
-            this.ratiosum = 0
-            this.height = 999999
-            this.add_img = function(img){
-                this.imgs.push(img)
-                this.ratiosum += img.ratio
-                this.height = this.width / this.ratiosum
-                this.maxheight = Math.min(img.height,this.maxheight)
-
-            }
-            this.am_i_properly_sized = function(){
-                return (this.height < this.maxheight)
-            }
-            this.fit_line_to_window = function(){
-                var scaled_image_width = 0 //find out what the image was actually scaled to.  To get pixel perfect edges we will need to fudge the width of a picture per line
-                for(j = 0; j < this.imgs.length; j++){
-                    this.imgs[j].src.height(this.height)
-                    this.imgs[j].src.width(this.height*this.imgs[j].ratio - this.padding) //there's still more work I can do refactoring this code. why need to store copies of all the picture structure in the new array?
-                    scaled_image_width += this.imgs[j].src.width()
-                    //console.log("image with width="+this.imgs[j].src.width())
-                }
-                //this.imgs[0].src.width(this.imgs[0].src.width()-(scaled_image_width-this.width)) //fudging the scaling of one image per line to get pixel perfect right edge.
-            }
-            this.scale_line_height_to_value = function(val){
-                for(j = 0; j < this.imgs.length; j++){
-                    this.imgs[j].src.height(val)
-                }
-            }
-        }
-
-
-        //master variables
-        var window_width = $("#photos").width() //note: 16 appears to be the default margin size  Just on Chrome?
-
-        //console.log("window.  width="+window_width)
-
-        var cur_line = new line(window_width) //create first line
-        for(i = 0; i < pic_array.length; i++){
-            cur_line.add_img(pic_array[i])
-
-            if(cur_line.am_i_properly_sized()){ //calculated height of window less than maximum
-                cur_line.fit_line_to_window()
-                var cur_line = new line(window_width) //start next line
-            }
-            
-        }
-        cur_line.scale_line_height_to_value(cur_line.maxheight*.8) //fit any straggling lines that aren't fit to the window
-
-    }
-</script>
