@@ -1,36 +1,6 @@
-
-class JSONGenerator <Jekyll::Generator
-	def generate(site)
-		require 'json'
-		require_relative 'fastimage-master/lib/fastimage'
-
-		imagearray = {}
-
-		for image in site.static_files do
-			if image.path.include? "img/"
-				size = FastImage.size(image.path)
-				path = "img/"+image.path.partition("img/")[2]
-
-				imagearray[path] = 
-					{
-						"width" => size[0],
-						"height" => size[1]
-					}
-
-			end
-		end
-		puts JSON.generate(imagearray)
-
-		File.open("images.json", 'w') { |file|
-			file.puts JSON.generate(imagearray)
-		}
-		
-		
-	end
-end
-
-#JSONGenerator.generate()
-
+module jekyll
+	class Generator < Jekyll::Generator
+		def generate(site)
 
 
 

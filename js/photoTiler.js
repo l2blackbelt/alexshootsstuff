@@ -47,24 +47,15 @@ $(window).resize(function(){
 
 var pic_array = []
 
-//$(window).on("load", function(){
-$(document).ready(function(){
+$(window).on("load", function(){
     create_pic_array()
     sort_pics()
 });
 
 function create_pic_array(){
-
-    imagedata = []
-
-    //get image json from the server
-    $.getJSON( "images.json", function( data ) {
-
     $('#photos img').each(function () {
-        //console.log($(this).attr("src"))
-        var pic = new picture($(this),data[$(this).attr("src")]["width"],data[$(this).attr("src")]["height"])
+        var pic = new picture($(this),$(this).width(),$(this).height())
         pic_array.push(pic)
-    });
     });
 
     function picture(src, width, height) {
